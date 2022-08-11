@@ -3,7 +3,6 @@ import "./styles.css";
 import Draggable from "react-draggable";
 import {ResizableBox} from "react-resizable";
 import "react-resizable/css/styles.css";
-import AutoScale from './AutoScale'
 
 export default function App() {
   const [disableDrag, setDisableDrag] = useState(false)
@@ -11,12 +10,18 @@ export default function App() {
     x0: 20,
     y0: 20,
   })
-  const [currentPos, setCurrentPos] = useState({
-    x: 20,
-    y: 20
+
+  const minHeight = 400;
+  const minWidth = 400
+
+  const [widgetState, setWidgetState] = useState({
+    width: 600,
+    height: 600,
+    pos: {
+      x: 20,
+      y: 20
+    }
   })
-  const [widgetWidth, setWidgetWidth] = useState(1000);
-  const [widgetHeight, setWidgetHeight] = useState(800);
 
   var lastX = window.innerWidth
   var lastY = window.innerHeight
@@ -24,8 +29,9 @@ export default function App() {
   useEffect(() => {
     console.log('init data: ')
     console.log("screenWidth — " + window.innerWidth, "screenHeight — " + window.innerHeight)
-    console.log('widgetWidth, widgetHeight: ', widgetWidth, widgetHeight)
-    console.log('xPos, yPos: ', currentPos.x, currentPos.y)
+    console.log('widgetWidth, widgetHeight: ', widgetState.width, widgetState.height)
+    console.log("widgetMinWidth — " + minWidth, "widgetMinHeight — " + minHeight)
+    console.log('xPos, yPos: ', widgetState.pos.x, widgetState.pos.y)
   }, [])
 
   useEffect(() => {
@@ -33,46 +39,59 @@ export default function App() {
       if (window.innerWidth && window.innerHeight) {
         const xScale = window.innerWidth / lastX
         const yScale = window.innerHeight / lastY
-        console.log('WINDOW WIDTH BECOMES SMALLER!');
         console.log("screenWidth — " + window.innerWidth, "screenHeight — " + window.innerHeight)
         console.log('xScale, yScale: ', xScale, yScale)
-        setWidgetWidth(prevWidth => {
-          console.log('prevWidth, newWidth(xScale * prevHeight): ', prevWidth, xScale * prevWidth)
-          return prevWidth * xScale
-        })
-        setWidgetHeight(prevHeight => {
-          console.log('prevHeight, newHeight(yScale * prevHeight): ', prevHeight, yScale * prevHeight)
-          return prevHeight * yScale
-        })
-        setCurrentPos(prev => {
-          console.log('prevXPos, newXPos: ', prev.x, prev.x * xScale)
-          console.log('prevYPos, newYPos: ', prev.y, prev.y * yScale)
+        setWidgetState(prev => {
+          let newWidth = xScale * prev.width
+          let newHeight = yScale * prev.height
+          if (newWidth < minWidth) {
+            newWidth = minWidth
+          }
+          if (newWidth > window.innerWidth - prev.pos.x){
+            newWidth =  prev.width
+          }
+          if (newHeight < minHeight) {
+            newHeight = minHeight
+          }
+          if (newHeight > window.innerHeight - prev.pos.y){
+            newWidth = prev.height
+          }
+          console.log('prevWidth, newWidth(xScale * prevHeight): ', prev.width, newWidth)
+          console.log('prevHeight, newHeight(yScale * prevHeight): ', prev.height, newHeight)
+          console.log('prevXPos, newXPos: ', prev.pos.x, prev.pos.x * xScale)
+          console.log('prevYPos, newYPos: ', prev.pos.y, prev.pos.y * yScale)
           return {
-            x: xScale * prev.x,
-            y: yScale * prev.y
+            width: newWidth,
+            height: newHeight,
+            pos: {
+              x: xScale * prev.pos.x,
+              y: yScale * prev.pos.y
+            }
           }
         })
       }
     }
     window.addEventListener('resize', resizeHandler)
     return () => window.removeEventListener('resize', resizeHandler)
-  }, [lastX, lastY])
+  }, [JSON.stringify([lastX, lastY])])
 
   const handleStop = (e, {lastX, lastY}) => {
-    setDefaultPos({
-      x: lastX,
-      y: lastY,
-    })
-    setCurrentPos({
-      x: lastX,
-      y: lastY
-    })
+    setWidgetState(prev => ({
+      ...prev,
+      pos: {
+        x: lastX,
+        y: lastY,
+      }
+    }))
   }
 
   const onResizeWidget = (event, {element, size, handle}) => {
     setDisableDrag(true)
-    setWidgetWidth(size.width);
-    setWidgetHeight(size.height);
+    setWidgetState(prev => ({
+      ...prev,
+      width: size.width,
+      height: size.height
+    }))
   }
 
   const onResizeStop = () => {
@@ -84,14 +103,15 @@ export default function App() {
       disabled={disableDrag}
       defaultPosition={{x: defaultPos.x0, y: defaultPos.y0}}
       onDrag={() => console.log("onDrag")}
-      position={currentPos}
+      position={widgetState.pos}
       onStop={handleStop}>
 
       <ResizableBox
         onResizeStop={onResizeStop}
-        height={widgetHeight}
-        width={widgetWidth}
+        height={widgetState.height}
+        width={widgetState.width}
         onResize={onResizeWidget}
+        minConstraints={[minHeight, minHeight]}
         resizeHandles={["s", "w", "e", "n", "sw", "nw", "se", "ne"]}
       >
         <div className="ttt">test</div>
