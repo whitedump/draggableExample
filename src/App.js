@@ -1,122 +1,91 @@
-import React, {useEffect, useRef, useState} from "react";
+import React from "react";
 import "./styles.css";
-import Draggable from "react-draggable";
-import {ResizableBox} from "react-resizable";
 import "react-resizable/css/styles.css";
+import Widget from "./Widget";
 
 export default function App() {
-  const [disableDrag, setDisableDrag] = useState(false)
-  const [defaultPos, setDefaultPos] = useState({
-    x0: 20,
-    y0: 20,
-  })
-
-  const minHeight = 400;
-  const minWidth = 400
-
-  const [widgetState, setWidgetState] = useState({
-    width: 600,
-    height: 600,
-    pos: {
-      x: 20,
-      y: 20
-    }
-  })
-
-  var lastX = window.innerWidth
-  var lastY = window.innerHeight
-
-  useEffect(() => {
-    console.log('init data: ')
-    console.log("screenWidth — " + window.innerWidth, "screenHeight — " + window.innerHeight)
-    console.log('widgetWidth, widgetHeight: ', widgetState.width, widgetState.height)
-    console.log("widgetMinWidth — " + minWidth, "widgetMinHeight — " + minHeight)
-    console.log('xPos, yPos: ', widgetState.pos.x, widgetState.pos.y)
-  }, [])
-
-  useEffect(() => {
-    const resizeHandler = () => {
-      if (window.innerWidth && window.innerHeight) {
-        const xScale = window.innerWidth / lastX
-        const yScale = window.innerHeight / lastY
-        console.log("screenWidth — " + window.innerWidth, "screenHeight — " + window.innerHeight)
-        console.log('xScale, yScale: ', xScale, yScale)
-        setWidgetState(prev => {
-          let newWidth = xScale * prev.width
-          let newHeight = yScale * prev.height
-          if (newWidth < minWidth) {
-            newWidth = minWidth
-          }
-          if (newWidth > window.innerWidth - prev.pos.x){
-            newWidth =  prev.width
-          }
-          if (newHeight < minHeight) {
-            newHeight = minHeight
-          }
-          if (newHeight > window.innerHeight - prev.pos.y){
-            newWidth = prev.height
-          }
-          console.log('prevWidth, newWidth(xScale * prevHeight): ', prev.width, newWidth)
-          console.log('prevHeight, newHeight(yScale * prevHeight): ', prev.height, newHeight)
-          console.log('prevXPos, newXPos: ', prev.pos.x, prev.pos.x * xScale)
-          console.log('prevYPos, newYPos: ', prev.pos.y, prev.pos.y * yScale)
-          return {
-            width: newWidth,
-            height: newHeight,
-            pos: {
-              x: xScale * prev.pos.x,
-              y: yScale * prev.pos.y
-            }
-          }
-        })
-      }
-    }
-    window.addEventListener('resize', resizeHandler)
-    return () => window.removeEventListener('resize', resizeHandler)
-  }, [JSON.stringify([lastX, lastY])])
-
-  const handleStop = (e, {lastX, lastY}) => {
-    setWidgetState(prev => ({
-      ...prev,
-      pos: {
-        x: lastX,
-        y: lastY,
-      }
-    }))
-  }
-
-  const onResizeWidget = (event, {element, size, handle}) => {
-    setDisableDrag(true)
-    setWidgetState(prev => ({
-      ...prev,
-      width: size.width,
-      height: size.height
-    }))
-  }
-
-  const onResizeStop = () => {
-    setDisableDrag(false)
-  }
+  const widgets = [
+    {
+      init: {
+        width: 500,
+        height: 200,
+        pos: {
+          x: 600,
+          y: 100,
+        },
+      },
+      minHeight: 300,
+      minWidth: 300,
+      color: "pink",
+    },
+    {
+      init: {
+        width: 300,
+        height: 300,
+        pos: {
+          x: 600,
+          y: 300,
+        },
+      },
+      minHeight: 300,
+      minWidth: 300,
+      color: "gray",
+    },
+    {
+      init: {
+        width: 300,
+        height: 300,
+        pos: {
+          x: 0,
+          y: 0,
+        },
+      },
+      minHeight: 300,
+      minWidth: 300,
+      color: "blue",
+    },
+    {
+      init: {
+        width: 400,
+        height: 400,
+        pos: {
+          x: 30,
+          y: 30,
+        },
+      },
+      minHeight: 300,
+      minWidth: 300,
+      color: "red",
+    },
+    {
+      init: {
+        width: 500,
+        height: 500,
+        pos: {
+          x: 60,
+          y: 60,
+        },
+      },
+      minHeight: 300,
+      minWidth: 300,
+      color: "green",
+    },
+  ];
 
   return (
-    <Draggable
-      disabled={disableDrag}
-      defaultPosition={{x: defaultPos.x0, y: defaultPos.y0}}
-      onDrag={() => console.log("onDrag")}
-      position={widgetState.pos}
-      onStop={handleStop}>
-
-      <ResizableBox
-        onResizeStop={onResizeStop}
-        height={widgetState.height}
-        width={widgetState.width}
-        onResize={onResizeWidget}
-        minConstraints={[minHeight, minHeight]}
-        resizeHandles={["s", "w", "e", "n", "sw", "nw", "se", "ne"]}
-      >
-        <div className="ttt">test</div>
-      </ResizableBox>
-    </Draggable>
+    <>
+      {widgets.map(({ init, minHeight, minWidth, color }, i) => (
+        <Widget
+          idx={i}
+          init={init}
+          minWidth={minWidth}
+          minHeight={minHeight}
+          style={{ background: color }}
+        >
+          {/*fest -> Widget 1 / w: 300, h: 400 / x: 20, y: 20*/}
+        </Widget>
+      ))}
+    </>
   );
 }
 // </div>
@@ -143,7 +112,6 @@ export default function App() {
 //           transformOrigin: `0 0 0`,
 //         }}
 //           >
-
 
 // {/*        </div>*/}
 // {/*    )}*/}

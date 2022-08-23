@@ -1,11 +1,291 @@
 .App {
     font-family: sans-serif;
     text-align: center;
-  }
-  
-  .ttt {
+}
+
+.ttt {
     width: 100%;
+    overflow: hidden;
     height: 100%;
     background-color: red;
-  }
-  
+    position: absolute !important;
+}
+
+.container {
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.widget-container {
+    position: relative;
+    margin: 10px;
+    background-color: #e3dada;
+    overflow: scroll;
+}
+
+html,
+body {
+    /*overflow: hidden;*/
+    overflow: scroll;
+    height: 100vh;
+    width: 100vw;
+}
+
+html {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    font-family: "Root UI";
+}
+
+:root {
+    --ids__density: 1.3;
+}
+
+:root {
+    --ids__font: "Root UI", Arial, sans-serif;
+}
+
+@font-face {
+    font-family: "Root UI";
+    font-weight: 400;
+    font-style: normal;
+    src: url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Regular.woff2")
+    format("woff2"),
+    url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Regular.woff")
+    format("woff"),
+    url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Regular.ttf")
+    format("truetype"),
+    url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Regular.eot#iefix")
+    format("embedded-opentype");
+}
+
+@font-face {
+    font-family: "Root UI";
+    font-weight: 500;
+    font-style: normal;
+    src: url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Medium.woff2")
+    format("woff2"),
+    url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Medium.woff")
+    format("woff"),
+    url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Medium.ttf")
+    format("truetype"),
+    url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Medium.eot#iefix")
+    format("embedded-opentype");
+}
+
+@font-face {
+    font-family: "Root UI";
+    font-weight: 700;
+    font-style: normal;
+    src: url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Bold.woff2")
+    format("woff2"),
+    url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Bold.woff")
+    format("woff"),
+    url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Bold.ttf")
+    format("truetype"),
+    url("https://336416.selcdn.ru/winvestor-journal/fonts/PT_Root_UI_Bold.eot#iefix")
+    format("embedded-opentype");
+}
+
+:root {
+    --fluid-min-width: 1000;
+    --fluid-max-width: 1600;
+    --fluid-screen: 100vw;
+    --type-scale-desktop: 1.5;
+    --font-size-min: 9;
+    --font-size-max: 12;
+    --type-scale-mobile: 1.333;
+    --font-size-min-mobile: 12;
+    --font-size-max-mobile: 9;
+    --fluid-bp: calc(
+            (var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) /
+            (var(--fluid-max-width) - var(--fluid-min-width))
+    );
+    --step-0: calc(
+            ((var(--f-0-min) / 16) * 1rem) + (var(--f-0-max) - var(--f-0-min)) *
+            var(--fluid-bp)
+    );
+    --f-1-min: calc(var(--f-0-min) * var(--type-scale));
+    --f-1-max: calc(var(--f-0-max) * var(--type-scale));
+    --step-1: calc(
+            ((var(--f-1-min) / 16) * 1rem) + (var(--f-1-max) - var(--f-1-min)) *
+            var(--fluid-bp)
+    );
+    --f-2-min: calc(var(--f-1-min) * var(--type-scale));
+    --f-2-max: calc(var(--f-1-max) * var(--type-scale));
+    --step-2: calc(
+            ((var(--f-2-min) / 16) * 1rem) + (var(--f-2-max) - var(--f-2-min)) *
+            var(--fluid-bp)
+    );
+    --f-3-min: calc(var(--f-2-min) * var(--type-scale));
+    --f-3-max: calc(var(--f-2-max) * var(--type-scale));
+    --step-3: calc(
+            ((var(--f-3-min) / 16) * 1rem) + (var(--f-3-max) - var(--f-3-min)) *
+            var(--fluid-bp)
+    );
+    --f--1-min: calc(var(--f-0-min) / var(--type-scale));
+    --f--1-max: calc(var(--f-0-max) / var(--type-scale));
+    --step--1: calc(
+            ((var(--f--1-min) / 16) * 1rem) + (var(--f--1-max) - var(--f--1-min)) *
+            var(--fluid-bp)
+    );
+    --f--2-min: calc(var(--f--1-min) / var(--type-scale));
+    --f--2-max: calc(var(--f--1-max) / var(--type-scale));
+    --step--2: calc(
+            ((var(--f--2-min) / 16) * 1rem) + (var(--f--2-max) - var(--f--2-min)) *
+            var(--fluid-bp)
+    );
+}
+
+@media screen and (min-width: 768px) {
+    :root {
+        --f-0-min: var(--font-size-min);
+        --f-0-max: var(--font-size-max);
+        --type-scale: var(--type-scale-desktop);
+    }
+}
+
+@media screen and (max-width: 767px) {
+    :root {
+        --f-0-min: var(--font-size-min-mobile);
+        --f-0-max: var(--font-size-max-mobile);
+        --type-scale: var(--type-scale-mobile);
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    :root {
+        --fluid-screen: calc(var(--fluid-min-width) * 1px);
+        --fluid-bp: calc(
+                (var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) /
+                (var(--fluid-max-width) - var(--fluid-min-width))
+        );
+        --step-0: calc(
+                ((var(--f-0-min) / 16) * 1rem) + (var(--f-0-max) - var(--f-0-min)) *
+                var(--fluid-bp)
+        );
+        --f-1-min: calc(var(--f-0-min) * var(--type-scale));
+        --f-1-max: calc(var(--f-0-max) * var(--type-scale));
+        --step-1: calc(
+                ((var(--f-1-min) / 16) * 1rem) + (var(--f-1-max) - var(--f-1-min)) *
+                var(--fluid-bp)
+        );
+        --f-2-min: calc(var(--f-1-min) * var(--type-scale));
+        --f-2-max: calc(var(--f-1-max) * var(--type-scale));
+        --step-2: calc(
+                ((var(--f-2-min) / 16) * 1rem) + (var(--f-2-max) - var(--f-2-min)) *
+                var(--fluid-bp)
+        );
+        --f-3-min: calc(var(--f-2-min) * var(--type-scale));
+        --f-3-max: calc(var(--f-2-max) * var(--type-scale));
+        --step-3: calc(
+                ((var(--f-3-min) / 16) * 1rem) + (var(--f-3-max) - var(--f-3-min)) *
+                var(--fluid-bp)
+        );
+        --f--1-min: calc(var(--f-0-min) / var(--type-scale));
+        --f--1-max: calc(var(--f-0-max) / var(--type-scale));
+        --step--1: calc(
+                ((var(--f--1-min) / 16) * 1rem) + (var(--f--1-max) - var(--f--1-min)) *
+                var(--fluid-bp)
+        );
+        --f--2-min: calc(var(--f--1-min) / var(--type-scale));
+        --f--2-max: calc(var(--f--1-max) / var(--type-scale));
+        --step--2: calc(
+                ((var(--f--2-min) / 16) * 1rem) + (var(--f--2-max) - var(--f--2-min)) *
+                var(--fluid-bp)
+        );
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    :root {
+        --fluid-screen: calc(var(--fluid-max-width) * 1px);
+        --fluid-bp: calc(
+                (var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) /
+                (var(--fluid-max-width) - var(--fluid-min-width))
+        );
+        --step-0: calc(
+                ((var(--f-0-min) / 16) * 1rem) + (var(--f-0-max) - var(--f-0-min)) *
+                var(--fluid-bp)
+        );
+        --f-1-min: calc(var(--f-0-min) * var(--type-scale));
+        --f-1-max: calc(var(--f-0-max) * var(--type-scale));
+        --step-1: calc(
+                ((var(--f-1-min) / 16) * 1rem) + (var(--f-1-max) - var(--f-1-min)) *
+                var(--fluid-bp)
+        );
+        --f-2-min: calc(var(--f-1-min) * var(--type-scale));
+        --f-2-max: calc(var(--f-1-max) * var(--type-scale));
+        --step-2: calc(
+                ((var(--f-2-min) / 16) * 1rem) + (var(--f-2-max) - var(--f-2-min)) *
+                var(--fluid-bp)
+        );
+        --f-3-min: calc(var(--f-2-min) * var(--type-scale));
+        --f-3-max: calc(var(--f-2-max) * var(--type-scale));
+        --step-3: calc(
+                ((var(--f-3-min) / 16) * 1rem) + (var(--f-3-max) - var(--f-3-min)) *
+                var(--fluid-bp)
+        );
+        --f--1-min: calc(var(--f-0-min) / var(--type-scale));
+        --f--1-max: calc(var(--f-0-max) / var(--type-scale));
+        --step--1: calc(
+                ((var(--f--1-min) / 16) * 1rem) + (var(--f--1-max) - var(--f--1-min)) *
+                var(--fluid-bp)
+        );
+        --f--2-min: calc(var(--f--1-min) / var(--type-scale));
+        --f--2-max: calc(var(--f--1-max) / var(--type-scale));
+        --step--2: calc(
+                ((var(--f--2-min) / 16) * 1rem) + (var(--f--2-max) - var(--f--2-min)) *
+                var(--fluid-bp)
+        );
+    }
+}
+
+@media screen and (max-width: 767px) {
+    :root {
+        --fluid-min-width: 320;
+        --fluid-max-width: 768;
+        --fluid-screen: 100vw;
+        --fluid-bp: calc(
+                (var(--fluid-screen) - var(--fluid-min-width) / 16 * 1rem) /
+                (var(--fluid-max-width) - var(--fluid-min-width))
+        );
+        --step-0: calc(
+                ((var(--f-0-min) / 16) * 1rem) + (var(--f-0-max) - var(--f-0-min)) *
+                var(--fluid-bp)
+        );
+        --f-1-min: calc(var(--f-0-min) * var(--type-scale));
+        --f-1-max: calc(var(--f-0-max) * var(--type-scale));
+        --step-1: calc(
+                ((var(--f-1-min) / 16) * 1rem) + (var(--f-1-max) - var(--f-1-min)) *
+                var(--fluid-bp)
+        );
+        --f-2-min: calc(var(--f-1-min) * var(--type-scale));
+        --f-2-max: calc(var(--f-1-max) * var(--type-scale));
+        --step-2: calc(
+                ((var(--f-2-min) / 16) * 1rem) + (var(--f-2-max) - var(--f-2-min)) *
+                var(--fluid-bp)
+        );
+        --f-3-min: calc(var(--f-2-min) * var(--type-scale));
+        --f-3-max: calc(var(--f-2-max) * var(--type-scale));
+        --step-3: calc(
+                ((var(--f-3-min) / 16) * 1rem) + (var(--f-3-max) - var(--f-3-min)) *
+                var(--fluid-bp)
+        );
+        --f--1-min: calc(var(--f-0-min) / var(--type-scale));
+        --f--1-max: calc(var(--f-0-max) / var(--type-scale));
+        --step--1: calc(
+                ((var(--f--1-min) / 16) * 1rem) + (var(--f--1-max) - var(--f--1-min)) *
+                var(--fluid-bp)
+        );
+        --f--2-min: calc(var(--f--1-min) / var(--type-scale));
+        --f--2-max: calc(var(--f--1-max) / var(--type-scale));
+        --step--2: calc(
+                ((var(--f--2-min) / 16) * 1rem) + (var(--f--2-max) - var(--f--2-min)) *
+                var(--fluid-bp)
+        );
+    }
+}
