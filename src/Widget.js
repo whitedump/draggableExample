@@ -99,18 +99,19 @@ const Widget = ({ init, style, minWidth, minHeight, idx, children }) => {
     }));
   };
 
-  const onChangeMin = (field, { target }) => {
-    setWidgetMinParams((prev) => ({
-      ...prev,
-      [field]: Number(target.value),
-    }));
-    if (Number(target.value) > widgetState[field]) {
-      setWidgetState((prev) => ({
-        ...prev,
-        [field]: Number(target.value),
-      }));
-    }
-  };
+  // handler для изменения минимальной ширины и высоты
+  // const onChangeMin = (field, { target }) => {
+  //   setWidgetMinParams((prev) => ({
+  //     ...prev,
+  //     [field]: Number(target.value),
+  //   }));
+  //   if (Number(target.value) > widgetState[field]) {
+  //     setWidgetState((prev) => ({
+  //       ...prev,
+  //       [field]: Number(target.value),
+  //     }));
+  //   }
+  // };
 
   const onResizeStop = () => {
     setDisableDrag(false);
@@ -138,24 +139,26 @@ const Widget = ({ init, style, minWidth, minHeight, idx, children }) => {
         <div style={{ fontSize: "var(--step-2)" }}>h: {widgetState.height}</div>
         <div style={{ fontSize: "var(--step-1)" }}>x: {widgetState.pos.x}</div>
         <div style={{ fontSize: "var(--step-1)" }}>y: {widgetState.pos.y}</div>
-        <div>
-          <span style={{ fontSize: "var(--step-0)" }}>min height: </span>
-          <input
-            style={{ fontSize: "var(--step-0)" }}
-            type={"number"}
-            onChange={(e) => onChangeMin("height", e)}
-            value={widgetMinParams.height}
-          />
-        </div>
-        <div>
-          <span style={{ fontSize: "var(--step-0)" }}>min width: </span>
-          <input
-            style={{ fontSize: "var(--step-0)" }}
-            type={"number"}
-            onChange={(e) => onChangeMin("width", e)}
-            value={widgetMinParams.width}
-          />
-        </div>
+        {/*инпут для пинимальной высоты*/}
+        {/*<div>*/}
+        {/*  <span style={{ fontSize: "var(--step-0)" }}>min height: </span>*/}
+        {/*  <input*/}
+        {/*    style={{ fontSize: "var(--step-0)" }}*/}
+        {/*    type={"number"}*/}
+        {/*    onChange={(e) => onChangeMin("height", e)}*/}
+        {/*    value={widgetMinParams.height}*/}
+        {/*  />*/}
+        {/*</div>*/}
+        {/*иннуут для минимальной ширины*/}
+        {/*<div>*/}
+        {/*  <span style={{ fontSize: "var(--step-0)" }}>min width: </span>*/}
+          {/*<input*/}
+          {/*  style={{ fontSize: "var(--step-0)" }}*/}
+          {/*  type={"number"}*/}
+          {/*  onChange={(e) => onChangeMin("width", e)}*/}
+          {/*  value={widgetMinParams.width}*/}
+          {/*/>*/}
+        {/*</div>*/}
         {children}
       </ResizableBox>
     </Draggable>
