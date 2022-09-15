@@ -52,19 +52,10 @@ const Widget = ({ init, style, minWidth, minHeight, idx, children }) => {
             newWidth,
             window.innerWidth - prev.pos.x
           );
-          // if (newWidth > window.innerWidth - prev.pos.x) {
-          //   // debugger;
-          //   newWidth = prev.width;
-          //   newX = prev.pos.x
-          // }
           if (newWidth <= widgetMinParams.width) {
             newWidth = widgetMinParams.width;
             newX = prev.pos.x
           }
-          // if (newHeight > window.innerHeight - prev.pos.y) {
-          //   newHeight = prev.height;
-          //   newY = prev.pos.y
-          // }
           if (newHeight <= widgetMinParams.height) {
             newHeight = widgetMinParams.height;
             newY = prev.pos.y
@@ -142,10 +133,6 @@ const Widget = ({ init, style, minWidth, minHeight, idx, children }) => {
         minConstraints={[widgetMinParams.width, widgetMinParams.height]}
         resizeHandles={["w", "n", "nw"]}
       >
-        {/*<div*/}
-        {/*  className={"ttt"}*/}
-        {/*  style={{ height: widgetState.height, width: widgetState.width }}*/}
-        {/*>*/}
         <div style={{ fontSize: "var(--step-3)" }}>fest -> Widget {idx}</div>
         <div style={{ fontSize: "var(--step-2)" }}>w: {widgetState.width}</div>
         <div style={{ fontSize: "var(--step-2)" }}>h: {widgetState.height}</div>
@@ -170,7 +157,6 @@ const Widget = ({ init, style, minWidth, minHeight, idx, children }) => {
           />
         </div>
         {children}
-        {/*</div>*/}
       </ResizableBox>
     </Draggable>
   );

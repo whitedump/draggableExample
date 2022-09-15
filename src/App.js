@@ -82,38 +82,8 @@ export default function App() {
           minHeight={minHeight}
           style={{ background: color }}
         >
-          {/*fest -> Widget 1 / w: 300, h: 400 / x: 20, y: 20*/}
         </Widget>
       ))}
     </>
   );
 }
-// </div>
-
-// <div
-//   style={{ height: `${height}px`, width: `${width}px`}} >
-// <div>
-//   <AutoScale
-//     maxHeight={400}
-//     style={{
-//       width: '80vw',
-//       height: 400,
-//       backgroundColor: 'silver',
-//     }}
-//   >
-//     {({ getRef, scale }) => (
-//       <div
-//         ref={getRef}
-//         style={{
-//           width: 800,
-//           height: 600,
-//           backgroundColor: 'red',
-//           transform: `scale(${scale})`,
-//           transformOrigin: `0 0 0`,
-//         }}
-//           >
-
-// {/*        </div>*/}
-// {/*    )}*/}
-// {/*  </AutoScale>*/}
-// {/*</div>*/}
